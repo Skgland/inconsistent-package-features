@@ -6,13 +6,10 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[workspace]
-members = ["crates/*"]
-
 [dependencies]
-a = { path = "crates/a", default-features = false }
-dep-b = { path = "crates/dep-b", optional = true }
-dep-b-replacement = { path = "crates/dep-b-replacement", optional = true }
+a = { path = "../a", default-features = false }
+dep-b = { path = "../dep-b", optional = true }
+dep-b-replacement = { path = "../dep-b-replacement", optional = true }
 
 [features]
 replace-b = ["dep-b-replacement", "a/replace-b"]
