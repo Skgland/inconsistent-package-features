@@ -14,6 +14,7 @@ env:
 
 jobs:
   root-package:
+    name: "Root Package Fails"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,6 +29,7 @@ jobs:
       # this is currently broken so we expect failiur
       run: "! ./test_root_package.sh"
   virtual-workspace:
+    name: "Virtual Workspace Succeeds"
     runs-on: ubuntu-latest
     strategy:
       matrix:
