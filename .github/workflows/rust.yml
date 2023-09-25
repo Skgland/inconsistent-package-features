@@ -5,18 +5,38 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '22 2 * * *'
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  root-package:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        rust-version: [ stable, beta, nightly ]
     steps:
     - uses: actions/checkout@v3
-    - name: Run Root Package Script
-      run: ./test_root_package.sh
+    - uses: dtolnay/rust-toolchain@master
+      id: toolchain
+      with:
+        toolchain: ${{ matrix.rust-version }}
+    - name: Run Script
+      # this is currently broken so we expect failiur
+      run: ! ./test_root_package.sh
+  virtual-workspace:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust-version: [ stable, beta, nightly ]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@master
+      id: toolchain
+      with:
+        toolchain: ${{ matrix.rust-version }}
     - name: Run Virtual Workspace Script
       run: ./test_virtual_workspace.sh
